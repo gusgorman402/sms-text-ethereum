@@ -1,5 +1,6 @@
 const http = require('http');
 const express = require('express');
+const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 dotenv.config();
 const session = require('express-session');
@@ -8,6 +9,7 @@ const etherscan = require('etherscan-api').init(process.env.ETHERSCAN_API);
 const app = express();
 
 app.use(session({secret: 'anything-you-want-but-keep-secret'}));
+app.use( bodyParser.urlencoded( { extended: false } ) );
 
 app.post('/sms', (req, res) => {
   const smsCount = req.session.counter || 0;
@@ -15,7 +17,7 @@ app.post('/sms', (req, res) => {
 
   // PARSING LOGIC
   // temp bullshit to show that you can chain messages
-  let message = 'Hello, thanks for the new message.';
+  let message = 'Hello, thanks for the new message: ' + req.body.Body;
 
   if(smsCount > 0) {
     message = 'Hello, thanks for message number ' + (smsCount + 1);
