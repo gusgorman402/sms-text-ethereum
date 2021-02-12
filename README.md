@@ -1,4 +1,4 @@
-# eth-denver
+# sms-text-ethereum
 ETHDenver Project
 
 ## How To Run
